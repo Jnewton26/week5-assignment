@@ -8,7 +8,7 @@ class player {
     constructor(name, position) {
         this.name = name;
         this.position = position;
-    }
+    }  // first class
 
     describe() {
         return `${this.name} plays ${this.position}.`;
@@ -18,7 +18,7 @@ class player {
 class Team {
     constructor(name) {
         this.name = name;
-        this.players = [];
+        this.players = []; // at least one array (it's blank)
     }
 
     addPlayer(player) {
@@ -36,11 +36,11 @@ class Team {
 
 class Menu {
     constructor() {
-        this.teams = []
+        this.teams = [];
         this.selectedTeam = null;
-    }
+    }  // second class
 
-    start() {
+    start() {   // starts the menu application.
         let selection = this.showMainMenuOptions();
 
         while (selection != 0) {
@@ -62,28 +62,34 @@ class Menu {
             }
             selection = this.showMainMenuOptions();
         }
+
         alert('Goodbye!');
     }
 
     showMainMenuOptions() {
         return prompt(`
-        0) exit
-        1) create new team
-        2) view team
-        3) delete team
-        4) display all teams
+            0) exit
+            1) create new team
+            2) view team
+            3) delete team
+            4) display all teams
         `);
     }
 
     showTeamMenuOptions(teamInfo) {
         return prompt(`
-        0) back
-        1) create player
-        2) delete player
-        -----------------------
-        ${teamInfo}
-        
-        `);
+            0) back
+            1) create player
+            2) delete player
+            ---------------------
+            ${teamInfo}`);
+    }
+
+    deleteTeam() {
+        let index = prompt('Enter the index of the ream you wish to delete: ');
+        if (index > -1 && index < this.teams.length) {
+            this.teams.splice(index, 1);
+        }
     }
 
     displayTeams() {
@@ -110,7 +116,7 @@ class Menu {
                     + ' - ' + this.selectedTeam.players[i].position + '\n';
             }
 
-            let selection = this.showMainMenuOptions(description);
+            let selection = this.showTeamMenuOptions(description);
             switch (selection) {
                 case '1':
                     this.createPlayer();
@@ -123,25 +129,27 @@ class Menu {
 
 
     deleteTeam() {
-        let index = prompt('Enter the index fot the team you wish to delete: ');
+        let index = prompt('Enter de index of the team you wish to delete');
         if (index > -1 && index < this.teams.length) {
             this.teams.splice(index, 1);
         }
     }
 
     createPlayer() {
-        let name = prompt('Enter name for a new player');
-        let position = prompt('Enter position for player');
+
+        let name = prompt('Enter name for new player');
+        let position = prompt('Enter position for new player');
         this.selectedTeam.player.push(new player(name, position));
     }
 
     deletePlayer() {
-        let index = prompt('Enter the index of the player you wish to delete');
-        if (index > -1 && index < this.selectedTeam.player.length) {
-            this.selectedTeam.player.splice(index, 1);
+        let index = prompt('Enter the index of the player you wish to delete: ');
+        if (index > -1 && index < this.selectedTeam.length) {
+            this.selectedTeam.players.splice(index, 1);
         }
     }
 }
+
 
 let menu = new Menu();
 menu.start();
